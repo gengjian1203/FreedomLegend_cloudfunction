@@ -44,7 +44,7 @@ createMember = async (newInfo) => {
 }
 
 // 更新成员信息
-updateMemberInfo = async (openId, newInfo, oldInfo, isLogin) => {
+updateMemberInfo = async (newInfo, oldInfo, isLogin) => {
   let data = oldInfo;
   // 除去id与openid
   delete data['_id'];
@@ -94,7 +94,7 @@ exports.main = async (event, context) => {
 
   // 进行处理
   try {
-    console.log('oldInfo', oldInfo)
+    console.log('createMember oldInfo', oldInfo)
     if (oldInfo === null) {
       // 创建用户信息
       await createMember(newInfo);
