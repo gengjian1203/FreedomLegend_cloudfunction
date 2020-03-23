@@ -8,29 +8,33 @@ cloud.init({
 });
 
 const db = cloud.database();
+let _id = '';
+let _openid = '';
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  // 
-  const openId = cloud.getWXContext().OPENID;
+  _openid = cloud.getWXContext().OPENID;
+  _id = `mem-${_openid}`;
   let result = true;
   let member = {};
   let game = {};
 
   try {
     game = await db.collection('global').get();
-    member = await db.collection('member')
-            .where({
-              _openid: openId
-            })
-            .field({
-              level: true,
-            })
-            .get();
   } catch (e) {
     // 没有查到。异常。
     result = false;
-    console.log('queryGameDetail error', e);
+    console.log('query global error', e);
+  }
+  try {
+    member = await db.collection('member')
+                     .doc(_id)
+                     .field({
+                       level: true,
+                     })
+                     .get();
+  } catch (e) {
+    console.log('query member error', e);
   }
 
   return {

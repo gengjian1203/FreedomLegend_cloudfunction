@@ -8,20 +8,21 @@ cloud.init({
 });
 
 const db = cloud.database();
+let _id = '';
+let _openid = '';
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  // 
-  const openId = event.openid ? event.openid : cloud.getWXContext().OPENID;
+  _openid = event.openid !== undefined ? event.openid : cloud.getWXContext().OPENID;
+  _id = `mem-${_openid}`;
+  
   let result = true;
   let member = {};
 
   try {
     member = await db.collection('member')
-      .where({
-        _openid: openId
-      })
-      .get();
+                     .doc(_id)
+                     .get();
   } catch (e) {
     // 没有查到。异常。
     result = false;

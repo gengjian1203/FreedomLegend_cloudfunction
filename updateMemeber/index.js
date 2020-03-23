@@ -5,15 +5,19 @@ cloud.init();
 
 // 可在入口函数外缓存 db 对象
 const db = cloud.database();
+let _id = '';
+let _openid = '';
+
 
 // 创建成员信息
-createMember = async (openId, newInfo) => {
+createMember = async (newInfo) => {
   let data = {};
   // 系统级
-  data._openid = openId;
-  data.createTime = db.serverDate();    // 创建时间
-  data.loginTime = db.serverDate();    // 创建时间
-  data.updateTime = db.serverDate();    // 修改时间
+  data._id = _id;
+  data._openid = _openid;
+  data._createTime = db.serverDate();    // 创建时间
+  data._loginTime = db.serverDate();    // 创建时间
+  data._updateTime = db.serverDate();    // 修改时间
   // 外部展示
   data.avatarUrl = newInfo.avatarUrl; // 头像url
   data.nickName = newInfo.nickName; // 姓名
@@ -48,9 +52,9 @@ updateMemberInfo = async (openId, newInfo, oldInfo, isLogin) => {
 
   // 更新操作时间
   if (isLogin) {
-    data.loginTime = db.serverDate();    // 登录时间
+    data._loginTime = db.serverDate();    // 登录时间
   } 
-  data.updateTime = db.serverDate();   // 更新时间
+  data._updateTime = db.serverDate();   // 更新时间
   // 将待更新数据放入data
   for (let key in newInfo) {
     data[key] = newInfo[key];
@@ -59,9 +63,7 @@ updateMemberInfo = async (openId, newInfo, oldInfo, isLogin) => {
   // 更新用户信息
   try {
     await db.collection('member')
-            .where({
-              _openid: openId
-            })
+            .doc(_id)
             .update({
               data
             });
@@ -72,8 +74,9 @@ updateMemberInfo = async (openId, newInfo, oldInfo, isLogin) => {
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  // 
-  const openId = cloud.getWXContext().OPENID;
+  _openid = cloud.getWXContext().OPENID;
+  _id = `mem-${_openid}`;
+
   const newInfo = event.memberInfo;
   const isLogin = event.isLogin;
   let result = true;
@@ -82,9 +85,8 @@ exports.main = async (event, context) => {
   // 确认是否有数据
   try {
     oldInfo = await db.collection('member')
-                         .where({
-                           _openid: openId
-                         }).get();
+                      .doc(_id)
+                      .get();
   } catch(e) {
     // 之前没有数据
     console.log('main query oldInfo error.', e);
@@ -92,15 +94,15 @@ exports.main = async (event, context) => {
 
   // 进行处理
   try {
-    if (oldInfo.data.length === 0) {
+    console.log('oldInfo', oldInfo)
+    if (oldInfo === null) {
       // 创建用户信息
-      console.log('createMember oldInfo', oldInfo)
-      await createMember(openId, newInfo);
+      await createMember(newInfo);
     } else {
       // 更新用户信息
       console.log('updateMemberInfo oldInfo', oldInfo)
       console.log('updateMemberInfo newInfo', newInfo)
-      await updateMemberInfo(openId, newInfo, oldInfo.data[0], isLogin);
+      await updateMemberInfo(newInfo, oldInfo, isLogin);
     }
   } catch (e) {
     result = false;
