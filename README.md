@@ -3,8 +3,8 @@
 ### queryGameDetail
 查询游戏的全局信息
 
-### queryMember
+### queryMemberInfo
 查询成员信息
 
-### updateMemeber
+### updateMemeberInfo
 更新/创建的角色信息

@@ -45,26 +45,23 @@ createMember = async (newInfo) => {
 
 // 更新成员信息
 updateMemberInfo = async (newInfo, oldInfo, isLogin) => {
-  let data = oldInfo;
+  data = { ...oldInfo.data, ...newInfo };
   // 除去id与openid
   delete data['_id'];
-  delete data['_openid'];
 
   // 更新操作时间
   if (isLogin) {
     data._loginTime = db.serverDate();    // 登录时间
   } 
   data._updateTime = db.serverDate();   // 更新时间
-  // 将待更新数据放入data
-  for (let key in newInfo) {
-    data[key] = newInfo[key];
-  }
+  
+  console.log('newInfo', data);
 
   // 更新用户信息
   try {
     await db.collection('member')
             .doc(_id)
-            .update({
+            .set({
               data
             });
   } catch (e) {
@@ -96,12 +93,10 @@ exports.main = async (event, context) => {
   try {
     console.log('createMember oldInfo', oldInfo)
     if (oldInfo === null) {
-      // 创建用户信息
+      // 创建玩家信息
       await createMember(newInfo);
     } else {
-      // 更新用户信息
-      console.log('updateMemberInfo oldInfo', oldInfo)
-      console.log('updateMemberInfo newInfo', newInfo)
+      // 更新玩家信息
       await updateMemberInfo(newInfo, oldInfo, isLogin);
     }
   } catch (e) {
