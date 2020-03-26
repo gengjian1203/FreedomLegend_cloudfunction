@@ -11,32 +11,46 @@ let _openid = '';
 
 // 创建成员信息
 createMember = async (newInfo) => {
-  let data = {};
+  let member = {};
+  let parts = {};
+  // 创建基本信息
   // 系统级
-  data._id = _id;
-  data._openid = _openid;
-  data._createTime = db.serverDate();    // 创建时间
-  data._loginTime = db.serverDate();    // 创建时间
-  data._updateTime = db.serverDate();    // 修改时间
+  member._id = _id;
+  member._partsid = `parts-${_openid}`; // 配件表ID
+  member._openid = _openid;
+  member._createTime = db.serverDate();    // 创建时间
+  member._loginTime = db.serverDate();    // 创建时间
+  member._updateTime = db.serverDate();    // 修改时间
   // 外部展示
-  data.avatarUrl = newInfo.avatarUrl; // 头像url
-  data.nickName = newInfo.nickName; // 姓名
-  data.level = 1; // 等级
-  data.exp = 0; // 经验
-  data.vip = 0; // 会员等级
-  data.vip_exp = 0; // 会员经验
-  data.money = 0; // 铜钱
-  data.gold = 0; // 元宝
+  member.avatarUrl = newInfo.avatarUrl; // 头像url
+  member.nickName = newInfo.nickName; // 姓名
+  member.level = 1; // 等级
+  member.exp = 0; // 经验
+  member.vip = 0; // 会员等级
+  member.vip_exp = 0; // 会员经验
+  member.money = 0; // 铜钱
+  member.gold = 0; // 元宝
   // 属性展示
-  data.hp = 100; // 生命
-  data.attack = 20; // 攻击
-  data.defense = 0; // 防御
-  data.dodge = 0; // 闪避
+  member.hp = 100; // 生命
+  member.attack = 20; // 攻击
+  member.defense = 0; // 防御
+  member.dodge = 0; // 闪避
 
-  // 创建新的用户记录
+  // 创建配件表基本信息
+  parts._id = member._partsid; // 配件表ID
+  parts.equipment = []; // 装备列表
+  parts.consumables = []; // 消耗品列表
+  parts.magic = []; // 功法列表
+  parts.pets = []; // 宠物列表
+
+
+  // 创建新的玩家信息
   try {
     await db.collection('member').add({
-      data
+      data: member
+    });
+    await db.collection('parts').add({
+      data: parts
     });
   } catch (e) {
     console.log('createMember error.', e);
