@@ -11,6 +11,7 @@ let _openid = '';
 
 // 创建成员信息
 createMember = async (newInfo) => {
+  const dataServer = db.serverDate();
   let member = {};
   let parts = {};
   // 创建基本信息
@@ -18,9 +19,10 @@ createMember = async (newInfo) => {
   member._id = _id;
   member._partsid = `parts-${_openid}`; // 配件表ID
   member._openid = _openid;
-  member._createTime = db.serverDate();    // 创建时间
-  member._loginTime = db.serverDate();    // 创建时间
-  member._updateTime = db.serverDate();    // 修改时间
+  member._createTime = dataServer;    // 创建时间
+  member._loginTime = dataServer;    // 登录时间
+  member._updateTime = dataServer;    // 修改时间
+  member.timeLogin = new Date().getTime();    // 登录时间.getTime()
   // 外部展示
   member.avatarUrl = newInfo.avatarUrl; // 头像url
   member.nickName = newInfo.nickName; // 姓名
@@ -59,15 +61,17 @@ createMember = async (newInfo) => {
 
 // 更新成员信息
 updateMemberInfo = async (newInfo, oldInfo, isLogin) => {
-  data = { ...oldInfo.data, ...newInfo };
+  const dataServer = db.serverDate();
+  const data = { ...oldInfo.data, ...newInfo };
   // 除去id与openid
   delete data['_id'];
 
   // 更新操作时间
   if (isLogin) {
-    data._loginTime = db.serverDate();    // 登录时间
+    data._loginTime = dataServer;    // 登录时间
+    data.timeLogin = new Date().getTime();    // 登录时间.getTime()
   } 
-  data._updateTime = db.serverDate();   // 更新时间
+  data._updateTime = dataServer;   // 更新时间
   
   console.log('newInfo', data);
 
@@ -91,6 +95,7 @@ exports.main = async (event, context) => {
   const newInfo = event.memberInfo;
   const isLogin = event.isLogin;
   let result = true;
+  let timeHook = 0;
   let oldInfo = null;
 
   // 确认是否有数据
@@ -112,6 +117,11 @@ exports.main = async (event, context) => {
     } else {
       // 更新玩家信息
       await updateMemberInfo(newInfo, oldInfo, isLogin);
+      // 计算挂机时间
+      if (isLogin) {
+        const nowTime = new Date().getTime();
+        timeHook = nowTime - oldInfo.data.timeLogin;
+      }
     }
   } catch (e) {
     result = false;
@@ -119,6 +129,7 @@ exports.main = async (event, context) => {
   }
 
   return {
-    result: result,
+    result,
+    timeHook
   }
 }
