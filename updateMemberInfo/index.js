@@ -8,6 +8,28 @@ const db = cloud.database();
 let _id = '';
 let _openid = '';
 
+// 生成满足正态分布的随机数
+function randomNormalDistribution() {
+  var u = 0.0, v = 0.0, w = 0.0, c = 0.0;
+  do {
+    //获得两个（-1,1）的独立随机变量
+    u = Math.random() * 2 - 1.0;
+    v = Math.random() * 2 - 1.0;
+    w = u * u + v * v;
+  } while (w == 0.0 || w >= 1.0)
+  //这里就是 Box-Muller转换
+  c = Math.sqrt((-2 * Math.log(w)) / w);
+  //返回2个标准正态分布的随机数，封装进一个数组返回
+  //当然，因为这个函数运行较快，也可以扔掉一个
+  //return [u*c,v*c];
+  return u * c;
+}
+
+// 生成满足正态分布的随机数[170,190]  [0, 100]
+// getNumberInNormalDistribution(180, 10)  (50, 50)
+function getNumberInNormalDistribution(mean, std_dev) {
+  return mean + (randomNormalDistribution() * std_dev);
+}
 
 // 创建成员信息
 createMember = async (newInfo) => {
@@ -26,25 +48,33 @@ createMember = async (newInfo) => {
   // 外部展示
   member.avatarUrl = newInfo.avatarUrl; // 头像url
   member.nickName = newInfo.nickName; // 姓名
+  member.title = ''; // 称号
+  // member.describe = parseInt(Math.random() * 100); // 描述
+  member.describe = getNumberInNormalDistribution(50, 50) // 描述
   member.level = 1; // 等级
   member.exp = 0; // 经验
-  member.vip = 0; // 会员等级
-  member.vip_exp = 0; // 会员经验
   member.money = 0; // 铜钱
   member.gold = 0; // 元宝
   // 属性展示
   member.hp = 100; // 生命
-  member.attack = 20; // 攻击
-  member.defense = 0; // 防御
-  member.dodge = 0; // 闪避
+  member.outerAttack = 20; // 外功
+  member.innerAttack = 10; // 内功
+  member.outerDefense = 10; // 外防
+  member.innerDefense = 0; // 内防
+  member.crit = 0; // 暴击率
+  member.dodge = 0; // 闪避率
+  member.block = 0; // 格挡率
+  member.lucky = 0; // 幸运值
 
   // 创建配件表基本信息
   parts._id = member._partsid; // 配件表ID
+  parts.mail = []; // 邮件列表
   parts.equipment = []; // 装备列表
   parts.consumables = []; // 消耗品列表
   parts.magic = []; // 功法列表
   parts.pets = []; // 宠物列表
-
+  parts.title = []; // 称号列表
+  parts.log = []; // 人物传记列表
 
   // 创建新的玩家信息
   try {
@@ -68,10 +98,10 @@ updateMemberInfo = async (newInfo, oldInfo, isLogin) => {
 
   // 更新操作时间
   if (isLogin) {
-    data._loginTime = dataServer;    // 登录时间
+    data._loginTime = dataServer;             // 登录时间
     data.timeLogin = new Date().getTime();    // 登录时间.getTime()
   } 
-  data._updateTime = dataServer;   // 更新时间
+  data._updateTime = dataServer;              // 更新时间
   
   console.log('newInfo', data);
 
