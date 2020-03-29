@@ -25,8 +25,8 @@ function randomNormalDistribution() {
   return u * c;
 }
 
-// 生成满足正态分布的随机数[170,190]  [0, 100]
-// getNumberInNormalDistribution(180, 10)  (50, 50)
+// 生成满足正态分布的随机数 基础值50，标准差13
+// getNumberInNormalDistribution
 function getNumberInNormalDistribution(mean, std_dev) {
   return mean + (randomNormalDistribution() * std_dev);
 }
@@ -49,8 +49,7 @@ createMember = async (newInfo) => {
   member.avatarUrl = newInfo.avatarUrl; // 头像url
   member.nickName = newInfo.nickName; // 姓名
   member.title = ''; // 称号
-  // member.describe = parseInt(Math.random() * 100); // 描述
-  member.describe = getNumberInNormalDistribution(50, 50) // 描述
+  member.describe = getNumberInNormalDistribution(50, 13) // 描述
   member.level = 1; // 等级
   member.exp = 0; // 经验
   member.money = 0; // 铜钱
