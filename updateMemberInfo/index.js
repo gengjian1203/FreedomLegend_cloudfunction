@@ -50,7 +50,7 @@ createMember = async (newInfo) => {
   member.nickName = newInfo.nickName; // 姓名
   member.title = ''; // 称号
   member.describe = getNumberInNormalDistribution(50, 13) // 描述
-  member.level = 1; // 等级
+  member.level = 0; // 等级
   member.exp = 0; // 经验
   member.money = 0; // 铜钱
   member.gold = 0; // 元宝
