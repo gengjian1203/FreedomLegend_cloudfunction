@@ -52,6 +52,7 @@ createMember = async (newInfo) => {
   // 外部展示
   member.avatarUrl = newInfo.avatarUrl; // 头像url
   member.nickName = newInfo.nickName; // 姓名
+  member.gender = newInfo.gender; // 性别 0 - 未知 1 - 男 2 - 女
   member.title = ''; // 称号
   member.describe = getNumberInNormalDistribution(50, 13) // 描述
   member.level = 0; // 等级
