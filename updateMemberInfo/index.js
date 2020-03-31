@@ -12,28 +12,28 @@ const db = cloud.database();
 let _id = '';
 let _openid = '';
 
-// 生成满足正态分布的随机数
-function randomNormalDistribution() {
-  var u = 0.0, v = 0.0, w = 0.0, c = 0.0;
-  do {
-    //获得两个（-1,1）的独立随机变量
-    u = Math.random() * 2 - 1.0;
-    v = Math.random() * 2 - 1.0;
-    w = u * u + v * v;
-  } while (w == 0.0 || w >= 1.0)
-  //这里就是 Box-Muller转换
-  c = Math.sqrt((-2 * Math.log(w)) / w);
-  //返回2个标准正态分布的随机数，封装进一个数组返回
-  //当然，因为这个函数运行较快，也可以扔掉一个
-  //return [u*c,v*c];
-  return u * c;
-}
+// // 生成满足正态分布的随机数
+// function randomNormalDistribution() {
+//   var u = 0.0, v = 0.0, w = 0.0, c = 0.0;
+//   do {
+//     //获得两个（-1,1）的独立随机变量
+//     u = Math.random() * 2 - 1.0;
+//     v = Math.random() * 2 - 1.0;
+//     w = u * u + v * v;
+//   } while (w == 0.0 || w >= 1.0)
+//   //这里就是 Box-Muller转换
+//   c = Math.sqrt((-2 * Math.log(w)) / w);
+//   //返回2个标准正态分布的随机数，封装进一个数组返回
+//   //当然，因为这个函数运行较快，也可以扔掉一个
+//   //return [u*c,v*c];
+//   return u * c;
+// }
 
-// 生成满足正态分布的随机数 基础值50，标准差13
-// getNumberInNormalDistribution
-function getNumberInNormalDistribution(mean, std_dev) {
-  return mean + (randomNormalDistribution() * std_dev);
-}
+// // 生成满足正态分布的随机数 基础值50，标准差13
+// // getNumberInNormalDistribution
+// function getNumberInNormalDistribution(mean, std_dev) {
+//   return mean + (randomNormalDistribution() * std_dev);
+// }
 
 // 创建成员信息
 createMember = async (newInfo) => {
@@ -50,30 +50,68 @@ createMember = async (newInfo) => {
   member._updateTime = dataServer;    // 修改时间
   member.timeLogin = new Date().getTime();    // 登录时间.getTime()
   // 外部展示
-  member.avatarUrl = newInfo.avatarUrl; // 头像url
-  member.nickName = newInfo.nickName; // 姓名
-  member.gender = newInfo.gender; // 性别 0 - 未知 1 - 男 2 - 女
   member.title = ''; // 称号
-  member.describe = getNumberInNormalDistribution(50, 13) // 描述
+  member.describe = (Math.random() * 100); // 描述 0 ~ 100
   member.level = 0; // 等级
   member.exp = 0; // 经验
   member.money = 0; // 铜钱
   member.gold = 0; // 元宝
-  // 属性展示
-  member.hp = 100; // 生命
-  member.outerAttack = 20; // 外功
-  member.innerAttack = 10; // 内功
-  member.outerDefense = 10; // 外防
-  member.innerDefense = 0; // 内防
-  member.crit = 0; // 暴击率
-  member.dodge = 0; // 闪避率
-  member.block = 0; // 格挡率
-  member.lucky = 0; // 幸运值
+  // 身穿装备
+  member.suit_hat = {}; // 头戴
+  member.suit_shoulder = {}; // 肩披
+  member.suit_jacket = {}; // 身穿
+  member.suit_weapon = {}; // 手持
+  member.suit_jewelry = {}; // 腰悬
+  member.suit_shoes = {}; // 足踏
+  // 基础属性
+  member.hp_base = 100; // 生命
+  member.outerAttack_base = 20; // 外功
+  member.innerAttack_base = 10; // 内功
+  member.outerDefense_base = 10; // 外防
+  member.innerDefense_base = 0; // 内防
+  member.crit_base = 0; // 暴击率
+  member.dodge_base = 0; // 闪避率
+  member.block_base = 0; // 格挡率
+  member.lucky_base = 0; // 幸运值
+  // 装备属性
+  member.hp_suit = 0; // 生命
+  member.outerAttack_suit = 0; // 外功
+  member.innerAttack_suit = 0; // 内功
+  member.outerDefense_suit = 0; // 外防
+  member.innerDefense_suit = 0; // 内防
+  member.crit_suit = 0; // 暴击率
+  member.dodge_suit = 0; // 闪避率
+  member.block_suit = 0; // 格挡率
+  member.lucky_suit = 0; // 幸运值
+  // 丹药属性
+  member.hp_medicine = 0; // 生命
+  member.outerAttack_medicine = 0; // 外功
+  member.innerAttack_medicine = 0; // 内功
+  member.outerDefense_medicine = 0; // 外防
+  member.innerDefense_medicine = 0; // 内防
+  member.crit_medicine = 0; // 暴击率
+  member.dodge_medicine = 0; // 闪避率
+  member.block_medicine = 0; // 格挡率
+  member.lucky_medicine = 0; // 幸运值
+  // 整体属性
+  member.hp_total = 100; // 生命
+  member.outerAttack_total = 20; // 外功
+  member.innerAttack_total = 10; // 内功
+  member.outerDefense_total = 10; // 外防
+  member.innerDefense_total = 0; // 内防
+  member.crit_total = 0; // 暴击率
+  member.dodge_total = 0; // 闪避率
+  member.block_total = 0; // 格挡率
+  member.lucky_total = 0; // 幸运值
+
+  // 解构赋值 如：头像url、姓名、性别 0 - 未知 1 - 男 2 - 女
+  member = { ...member, ...newInfo };
 
   // 创建配件表基本信息
   parts._id = member._partsid; // 配件表ID
   parts.mail = []; // 邮件列表
   parts.equipment = []; // 装备列表
+  parts.medicine = []; // 服用过药品列表
   parts.consumables = []; // 消耗品列表
   parts.magic = []; // 功法列表
   parts.pets = []; // 宠物列表
