@@ -8,16 +8,11 @@ cloud.init({
 });
 
 const db = cloud.database();
-let _id = '';
-let _openid = '';
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  _openid = cloud.getWXContext().OPENID;
-  _id = `mem-${_openid}`;
   let result = true;
-  let member = {};
-  let game = {};
+  let game = null;
 
   try {
     game = await db.collection('global').get();
@@ -26,20 +21,9 @@ exports.main = async (event, context) => {
     result = false;
     console.log('query global error', e);
   }
-  try {
-    member = await db.collection('member')
-                     .doc(_id)
-                     .field({
-                       level: true,
-                     })
-                     .get();
-  } catch (e) {
-    console.log('query member error', e);
-  }
 
   return {
     result: result,
-    member: member,
     game: game,
   }
 }

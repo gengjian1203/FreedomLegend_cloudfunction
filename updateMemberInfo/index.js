@@ -51,7 +51,7 @@ createMember = async (newInfo) => {
   member.timeLogin = new Date().getTime();    // 登录时间.getTime()
   // 外部展示
   member.title = ''; // 称号
-  member.describe = (Math.random() * 100); // 描述 0 ~ 100
+  member.describe = Math.floor(Math.random() * 100); // 描述 0 ~ 100
   member.level = 0; // 等级
   member.exp = 0; // 经验
   member.money = 0; // 铜钱
@@ -71,8 +71,8 @@ createMember = async (newInfo) => {
   member.innerDefense_base = 0; // 内防
   member.crit_base = 0; // 暴击率
   member.dodge_base = 0; // 闪避率
-  member.block_base = 0; // 格挡率
-  member.lucky_base = 0; // 幸运值
+  member.speed_base = 0; // 速度
+  member.understand_base = Math.floor(Math.random() * 100); // 悟性
   // 装备属性
   member.hp_suit = 0; // 生命
   member.outerAttack_suit = 0; // 外功
@@ -81,8 +81,8 @@ createMember = async (newInfo) => {
   member.innerDefense_suit = 0; // 内防
   member.crit_suit = 0; // 暴击率
   member.dodge_suit = 0; // 闪避率
-  member.block_suit = 0; // 格挡率
-  member.lucky_suit = 0; // 幸运值
+  member.speed_suit = 0; // 速度
+  member.understand_suit = 0; // 悟性
   // 丹药属性
   member.hp_medicine = 0; // 生命
   member.outerAttack_medicine = 0; // 外功
@@ -91,18 +91,18 @@ createMember = async (newInfo) => {
   member.innerDefense_medicine = 0; // 内防
   member.crit_medicine = 0; // 暴击率
   member.dodge_medicine = 0; // 闪避率
-  member.block_medicine = 0; // 格挡率
-  member.lucky_medicine = 0; // 幸运值
+  member.speed_medicine = 0; // 速度
+  member.understand_medicine = 0; // 悟性
   // 整体属性
-  member.hp_total = 100; // 生命
-  member.outerAttack_total = 20; // 外功
-  member.innerAttack_total = 10; // 内功
-  member.outerDefense_total = 10; // 外防
-  member.innerDefense_total = 0; // 内防
-  member.crit_total = 0; // 暴击率
-  member.dodge_total = 0; // 闪避率
-  member.block_total = 0; // 格挡率
-  member.lucky_total = 0; // 幸运值
+  member.hp_total = member.hp_base + member.hp_suit + member.hp_medicine; // 生命
+  member.outerAttack_total = member.outerAttack_base + member.outerAttack_suit + member.outerAttack_medicine;  // 外功
+  member.innerAttack_total = member.innerAttack_base + member.innerAttack_suit + member.innerAttack_medicine;  // 内功
+  member.outerDefense_total = member.outerDefense_base + member.outerDefense_suit + member.outerDefense_medicine; // 外防
+  member.innerDefense_total = member.innerDefense_base + member.innerDefense_suit + member.innerDefense_medicine; // 内防
+  member.crit_total = member.crit_base + member.crit_suit + member.crit_medicine;  // 暴击率
+  member.dodge_total = member.dodge_base + member.dodge_suit + member.dodge_medicine; // 闪避率
+  member.speed_total = member.speed_base + member.speed_suit + member.speed_medicine; // 速度
+  member.understand_total = member.understand_base + member.understand_suit + member.understand_medicine; // 悟性
 
   // 解构赋值 如：头像url、姓名、性别 0 - 未知 1 - 男 2 - 女
   member = { ...member, ...newInfo };
@@ -166,9 +166,11 @@ exports.main = async (event, context) => {
 
   const newInfo = event.memberInfo;
   const isLogin = event.isLogin;
-  let result = true;
-  let timeHook = 0;
+
   let oldInfo = null;
+  let result = true;          // 接口是否调用成功
+  let timeHook = 0;           // 挂机时间
+  let isNewMember = false;    // 是否为新用户
 
   // 确认是否有数据
   try {
@@ -184,9 +186,11 @@ exports.main = async (event, context) => {
   try {
     console.log('createMember oldInfo', oldInfo)
     if (oldInfo === null) {
+      isNewMember = true;
       // 创建玩家信息
       await createMember(newInfo);
     } else {
+      isNewMember = false;
       // 更新玩家信息
       await updateMemberInfo(newInfo, oldInfo, isLogin);
       // 计算挂机时间
@@ -202,6 +206,7 @@ exports.main = async (event, context) => {
 
   return {
     result,
-    timeHook
+    timeHook,
+    isNewMember
   }
 }
