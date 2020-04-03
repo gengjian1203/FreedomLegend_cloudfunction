@@ -159,6 +159,17 @@ updateMemberInfo = async (newInfo, oldInfo, isLogin) => {
   }
 }
 
+//////////////////////////////////////////////////
+// updateMemeberInfo
+// 更新/创建的角色信息
+// param 
+// memberInfo: Object   成员信息
+// isLogin: Boolean     是否是登录相关请求
+// return
+// result: Boolean      接口成功标识
+// timeHook: Number     挂机时间
+// isNewMember: Boolean 是否是新成员标识、决定跳转引导页还是主页面
+//////////////////////////////////////////////////
 // 云函数入口函数
 exports.main = async (event, context) => {
   _openid = cloud.getWXContext().OPENID;

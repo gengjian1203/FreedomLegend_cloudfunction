@@ -9,6 +9,14 @@ cloud.init({
 
 const db = cloud.database();
 
+//////////////////////////////////////////////////
+// queryGameDetail
+// 查询游戏的全局信息
+// param 
+// return
+// result: Boolean      接口成功标识
+// game: Object         游戏信息对象
+//////////////////////////////////////////////////
 // 云函数入口函数
 exports.main = async (event, context) => {
   let result = true;

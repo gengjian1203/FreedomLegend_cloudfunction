@@ -1,0 +1,14 @@
+{"_id":"100300","name":"青铜头盔","introduce":"大陆上常见的青铜头盔","describe":"","hp":100,"hp_up":10,"outerAttack":0,"outerAttack_up":0,"innerAttack":0,"innerAttack_up":0,"outerDefense":0,"outerDefense_up":0,"innerDefense":0,"innerDefense_up":0,"crit":0,"crit_up":0,"dodge":0,"dodge_up":0,"speed":0,"speed_up":0,"understand":0,"understand_up":0}
+{"_id":"100301","name":"青铜头盔·碎片","introduce":"用于合成青铜头盔"}
+{"_id":"100310","name":"青铜护肩","introduce":"大陆上常见的青铜护肩","describe":"","hp":0,"hp_up":0,"outerAttack":0,"outerAttack_up":0,"innerAttack":0,"innerAttack_up":0,"outerDefense":0,"outerDefense_up":0,"innerDefense":10,"innerDefense_up":2,"crit":0,"crit_up":0,"dodge":0,"dodge_up":0,"speed":0,"speed_up":0,"understand":0,"understand_up":0}
+{"_id":"100311","name":"青铜护肩·碎片","introduce":"用于合成青铜护肩"}
+{"_id":"100320","name":"青铜战甲","introduce":"大陆上常见的青铜战甲","describe":"","hp":0,"hp_up":0,"outerAttack":0,"outerAttack_up":0,"innerAttack":0,"innerAttack_up":0,"outerDefense":0,"outerDefense_up":10,"innerDefense":2,"innerDefense_up":0,"crit":0,"crit_up":0,"dodge":0,"dodge_up":0,"speed":0,"speed_up":0,"understand":0,"understand_up":0}
+{"_id":"100321","name":"青铜战甲·碎片","introduce":"用于合成青铜战甲"}
+{"_id":"100330","name":"青铜剑","introduce":"大陆上常见的青铜剑","describe":"","hp":0,"hp_up":0,"outerAttack":20,"outerAttack_up":4,"innerAttack":0,"innerAttack_up":0,"outerDefense":0,"outerDefense_up":0,"innerDefense":0,"innerDefense_up":0,"crit":0,"crit_up":0,"dodge":0,"dodge_up":0,"speed":0,"speed_up":0,"understand":0,"understand_up":0}
+{"_id":"100331","name":"青铜剑·碎片","introduce":"用于合成青铜剑"}
+{"_id":"100340","name":"青铜坠","introduce":"大陆上常见的青铜坠","describe":"","hp":0,"hp_up":0,"outerAttack":0,"outerAttack_up":0,"innerAttack":20,"innerAttack_up":4,"outerDefense":0,"outerDefense_up":0,"innerDefense":0,"innerDefense_up":0,"crit":0,"crit_up":0,"dodge":0,"dodge_up":0,"speed":0,"speed_up":0,"understand":0,"understand_up":0}
+{"_id":"100341","name":"青铜坠·碎片","introduce":"用于合成青铜坠"}
+{"_id":"100350","name":"青铜战靴","introduce":"大陆上常见的青铜战靴","describe":"","hp":0,"hp_up":0,"outerAttack":0,"outerAttack_up":0,"innerAttack":0,"innerAttack_up":0,"outerDefense":0,"outerDefense_up":0,"innerDefense":0,"innerDefense_up":0,"crit":0,"crit_up":0,"dodge":0,"dodge_up":0,"speed":1,"speed_up":0.5,"understand":0,"understand_up":0}
+{"_id":"100351","name":"青铜战靴·碎片","introduce":"用于合成青铜战靴"}
+{"_id":"100600","name":"白银头盔","introduce":"大陆上常见的白银头盔","describe":"我戴的是梦想！ ——菜鸟","hp":200,"hp_up":20,"outerAttack":0,"outerAttack_up":0,"innerAttack":10,"innerAttack_up":1,"outerDefense":0,"outerDefense_up":0,"innerDefense":0,"innerDefense_up":0,"crit":0,"crit_up":0,"dodge":0,"dodge_up":0,"speed":0,"speed_up":0,"understand":21,"understand_up":3.4}
+{"_id":"100601","name":"白银头盔·碎片","introduce":"用于合成白银头盔"}
