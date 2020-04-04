@@ -26,15 +26,33 @@ queryPartsForEquipment = async() => {
   return res.data.equipment;
 }
 
+// 查询资料库获取完整信息
+queryPartsInfoComplete = async(partsInfo) => {
+  for (let i = 0; i < partsInfo.length; i++) {
+    const item = partsInfo[i];
+    try {
+      const res = await db.collection('database_suit')
+                          .doc(item.id)
+                          .get();
+      // 除去_id
+      delete res.data['_id'];
+      // 解构赋值
+      partsInfo[i] = {...item, ...res.data};
+    } catch (e) {
+      console.log('queryPartsInfoComplete Error', e);
+    }
+  }
+}
+
 //////////////////////////////////////////////////
 // queryPartsInfo
 // 查询角色的附属数据信息
 // param 
 // openid: String       openid 如果传值则查询对应id的角色信息、如果不传值则查询自身的角色信息
-// type: String         'equip' - 背包
+// type: String         'all' - 全部, 'equip' - 装备, 'medicine' - 丹药, 'other' - 其他
 // return
 // result: Boolean      接口成功标识
-// partsInfo: Array     [{id:'', total:5}] 物品ID 物品数量
+// prize: Array         [{_id:'', id:'', total:5, time:0}] 物品UUID唯一标识 物品ID 物品数量 创建时间戳
 //////////////////////////////////////////////////
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -48,6 +66,9 @@ exports.main = async (event, context) => {
   // 查询指定信息
   try {
     switch (type) {
+      case 'all':
+        partsInfo = await queryPartsForEquipment();
+        break;
       case 'equip':
         partsInfo = await queryPartsForEquipment();
         break;
@@ -58,6 +79,9 @@ exports.main = async (event, context) => {
     result = false;
     console.log('查询指定信息 err.', e);
   }
+
+  // 查询资料库获取完整信息
+  await queryPartsInfoComplete(partsInfo);
 
   return {
     result,
