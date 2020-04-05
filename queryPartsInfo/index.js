@@ -31,7 +31,7 @@ queryPartsInfoComplete = async(partsInfo) => {
   for (let i = 0; i < partsInfo.length; i++) {
     const item = partsInfo[i];
     try {
-      const res = await db.collection('database_suit')
+      const res = await db.collection('database_equipment')
                           .doc(item.id)
                           .get();
       // 除去_id
