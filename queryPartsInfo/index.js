@@ -15,11 +15,11 @@ let _id = '';
 let _openid = '';
 
 // 查询角色拥有的所有装备相关道具
-queryPartsForEquipment = async() => {
+queryPartsForType = async(type) => {
   const res = await db.collection('parts')
                       .doc(_id)
                       .field({
-                        equipment: true,
+                        [type]: true,
                       })
                       .get();
 
@@ -49,7 +49,7 @@ queryPartsInfoComplete = async(partsInfo) => {
 // 查询角色的附属数据信息
 // param 
 // openid: String       openid 如果传值则查询对应id的角色信息、如果不传值则查询自身的角色信息
-// type: String         'all' - 全部, 'equip' - 装备, 'medicine' - 丹药, 'other' - 其他
+// type: String         'equipment' - 装备, 'magic' - 功法, 'medicine' - 丹药, 'other' - 其他
 // return
 // result: Boolean      接口成功标识
 // prize: Array         [{_id:'', id:'', total:5, time:0}] 物品UUID唯一标识 物品ID 物品数量 创建时间戳
@@ -65,16 +65,7 @@ exports.main = async (event, context) => {
 
   // 查询指定信息
   try {
-    switch (type) {
-      case 'all':
-        partsInfo = await queryPartsForEquipment();
-        break;
-      case 'equip':
-        partsInfo = await queryPartsForEquipment();
-        break;
-      default:
-        break;
-    }
+    partsInfo = await queryPartsForType(type);
   } catch (e) {
     result = false;
     console.log('查询指定信息 err.', e);

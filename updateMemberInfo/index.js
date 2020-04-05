@@ -163,6 +163,7 @@ updateMemberInfo = async (newInfo, oldInfo, isLogin) => {
 // updateMemeberInfo
 // 更新/创建的角色信息
 // param 
+// openid: String       openid 如果传值则查询对应id的角色信息、如果不传值则查询自身的角色信息
 // memberInfo: Object   成员信息
 // isLogin: Boolean     是否是登录相关请求
 // return
@@ -172,7 +173,7 @@ updateMemberInfo = async (newInfo, oldInfo, isLogin) => {
 //////////////////////////////////////////////////
 // 云函数入口函数
 exports.main = async (event, context) => {
-  _openid = cloud.getWXContext().OPENID;
+  _openid = event.openid !== undefined ? event.openid : cloud.getWXContext().OPENID;
   _id = `mem-${_openid}`;
 
   const newInfo = event.memberInfo;
