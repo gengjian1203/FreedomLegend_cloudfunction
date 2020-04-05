@@ -32,8 +32,8 @@ const getUUID = () => {
 // 随机获取装备抽奖信息
 // 5%   白银装备
 // 10%  白银碎片 * 5
-// 30%  青铜装备
-// 55%  青铜碎片 * 5
+// 10%  青铜装备
+// 75%  青铜碎片 * 5
 getRandomBox = async (type) => {
   const nRandom = Math.floor(Math.random() * 100);
   const objPrice = {};
@@ -41,13 +41,14 @@ getRandomBox = async (type) => {
   objPrice._id = getUUID();
   objPrice.time = new Date().getTime();
   objPrice.type = type;
+  objPrice.level = 1;
   if (nRandom < 5) {
     objPrice.id = `100600`;
     objPrice.total = 1;
   } else if (nRandom < 15) {
     objPrice.id = `100601`;
     objPrice.total = 5;
-  } else if (nRandom < 45) {
+  } else if (nRandom < 25) {
     const nPosition = Math.floor(Math.random() * 6);
     objPrice.id = `1003${nPosition}0`;
     objPrice.total = 1;
