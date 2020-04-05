@@ -29,33 +29,57 @@ const getUUID = () => {
   return uuid;
 }
 
-// 随机获取装备抽奖信息
-// 5%   白银装备
-// 10%  白银碎片 * 5
-// 10%  青铜装备
-// 75%  青铜碎片 * 5
+// 随机获取装备抽奖信息(0 ~ 99)
+// 1% 星耀装备
+// 2% 星耀碎片
+// 2% 钻石装备
+// 5% 钻石碎片
+// 5% 黄金装备
+// 10% 黄金碎片
+// 10% 白银装备
+// 15%  白银碎片
+// 15%  青铜装备
+// 35%  青铜碎片
 getRandomBox = async (type) => {
   const nRandom = Math.floor(Math.random() * 100);
+  const nPosition = Math.floor(Math.random() * 6);
+  const nTotal = (Math.floor(Math.random() * 3) + 1) * 5;
   const objPrice = {};
 
   objPrice._id = getUUID();
   objPrice.time = new Date().getTime();
   objPrice.type = type;
   objPrice.level = 1;
-  if (nRandom < 5) {
-    objPrice.id = `100600`;
+  if (nRandom < 1) {              // 1% 星耀装备
+    objPrice.id = `1015${nPosition}0`;
     objPrice.total = 1;
-  } else if (nRandom < 15) {
-    objPrice.id = `100601`;
-    objPrice.total = 5;
-  } else if (nRandom < 25) {
-    const nPosition = Math.floor(Math.random() * 6);
+  } else if (nRandom < 3) {       // 2% 星耀碎片
+    objPrice.id = `1015${nPosition}1`;
+    objPrice.total = nTotal;
+  } else if (nRandom < 5) {       // 2% 钻石装备
+    objPrice.id = `1012${nPosition}0`;
+    objPrice.total = 1;
+  } else if (nRandom < 10) {      // 5% 钻石碎片
+    objPrice.id = `1012${nPosition}1`;
+    objPrice.total = nTotal;
+  } else if (nRandom < 15) {      // 5% 黄金装备
+    objPrice.id = `1009${nPosition}0`;
+    objPrice.total = 1;
+  } else if (nRandom < 25) {      // 10% 黄金碎片
+    objPrice.id = `1009${nPosition}1`;
+    objPrice.total = nTotal;
+  } else if (nRandom < 35) {      // 10% 白银装备
+    objPrice.id = `1006${nPosition}0`;
+    objPrice.total = 1;
+  } else if (nRandom < 50) {      // 15%  白银碎片
+    objPrice.id = `1006${nPosition}1`;
+    objPrice.total = nTotal;
+  } else if (nRandom < 65) {      // 15%  青铜装备
     objPrice.id = `1003${nPosition}0`;
     objPrice.total = 1;
-  } else {
-    const nPosition = Math.floor(Math.random() * 6);
+  } else {                        // 35%  青铜碎片
     objPrice.id = `1003${nPosition}1`;
-    objPrice.total = 5;
+    objPrice.total = nTotal;
   }
   
   return objPrice;
