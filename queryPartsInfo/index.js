@@ -23,7 +23,7 @@ queryPartsForType = async(type) => {
                       })
                       .get();
 
-  return res.data.equipment;
+  return res.data[type];
 }
 
 // 查询资料库获取完整信息
@@ -68,11 +68,13 @@ exports.main = async (event, context) => {
     partsInfo = await queryPartsForType(type);
   } catch (e) {
     result = false;
+    partsInfo = [];
     console.log('查询指定信息 err.', e);
   }
-
-  // 查询资料库获取完整信息
-  await queryPartsInfoComplete(partsInfo);
+  if (partsInfo) {
+    // 查询资料库获取完整信息
+    await queryPartsInfoComplete(partsInfo);
+  }
 
   return {
     result,

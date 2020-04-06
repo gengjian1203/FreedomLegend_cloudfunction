@@ -11,11 +11,11 @@
 更新/创建的角色信息
 
 ## 脚本
-#### 装备资料库表 database_suit
+#### 装备资料库表 database_equipment
 
 ``` sql
 // 清空装备资料库
-db.collection('database_suit')
+db.collection('database_equipment')
 .where({
   _id: _.exists(true)
 })

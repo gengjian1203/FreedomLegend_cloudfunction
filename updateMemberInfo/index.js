@@ -57,12 +57,12 @@ createMember = async (newInfo) => {
   member.money = 0; // 铜钱
   member.gold = 0; // 元宝
   // 身穿装备
-  member.suit_hat = {}; // 头戴
-  member.suit_shoulder = {}; // 肩披
-  member.suit_jacket = {}; // 身穿
-  member.suit_weapon = {}; // 手持
-  member.suit_jewelry = {}; // 腰悬
-  member.suit_shoes = {}; // 足踏
+  member.equipment_hat = {}; // 头戴
+  member.equipment_shoulder = {}; // 肩披
+  member.equipment_jacket = {}; // 身穿
+  member.equipment_weapon = {}; // 手持
+  member.equipment_jewelry = {}; // 腰悬
+  member.equipment_shoes = {}; // 足踏
   // 基础属性
   member.hp_base = 100; // 生命
   member.outerAttack_base = 20; // 外功
@@ -74,15 +74,15 @@ createMember = async (newInfo) => {
   member.speed_base = 0; // 速度
   member.understand_base = Math.floor(Math.random() * 100); // 悟性
   // 装备属性
-  member.hp_suit = 0; // 生命
-  member.outerAttack_suit = 0; // 外功
-  member.innerAttack_suit = 0; // 内功
-  member.outerDefense_suit = 0; // 外防
-  member.innerDefense_suit = 0; // 内防
-  member.crit_suit = 0; // 暴击率
-  member.dodge_suit = 0; // 闪避率
-  member.speed_suit = 0; // 速度
-  member.understand_suit = 0; // 悟性
+  member.hp_equipment = 0; // 生命
+  member.outerAttack_equipment = 0; // 外功
+  member.innerAttack_equipment = 0; // 内功
+  member.outerDefense_equipment = 0; // 外防
+  member.innerDefense_equipment = 0; // 内防
+  member.crit_equipment = 0; // 暴击率
+  member.dodge_equipment = 0; // 闪避率
+  member.speed_equipment = 0; // 速度
+  member.understand_equipment = 0; // 悟性
   // 丹药属性
   member.hp_medicine = 0; // 生命
   member.outerAttack_medicine = 0; // 外功
@@ -94,15 +94,15 @@ createMember = async (newInfo) => {
   member.speed_medicine = 0; // 速度
   member.understand_medicine = 0; // 悟性
   // 整体属性
-  member.hp_total = member.hp_base + member.hp_suit + member.hp_medicine; // 生命
-  member.outerAttack_total = member.outerAttack_base + member.outerAttack_suit + member.outerAttack_medicine;  // 外功
-  member.innerAttack_total = member.innerAttack_base + member.innerAttack_suit + member.innerAttack_medicine;  // 内功
-  member.outerDefense_total = member.outerDefense_base + member.outerDefense_suit + member.outerDefense_medicine; // 外防
-  member.innerDefense_total = member.innerDefense_base + member.innerDefense_suit + member.innerDefense_medicine; // 内防
-  member.crit_total = member.crit_base + member.crit_suit + member.crit_medicine;  // 暴击率
-  member.dodge_total = member.dodge_base + member.dodge_suit + member.dodge_medicine; // 闪避率
-  member.speed_total = member.speed_base + member.speed_suit + member.speed_medicine; // 速度
-  member.understand_total = member.understand_base + member.understand_suit + member.understand_medicine; // 悟性
+  member.hp_total = member.hp_base + member.hp_equipment + member.hp_medicine; // 生命
+  member.outerAttack_total = member.outerAttack_base + member.outerAttack_equipment + member.outerAttack_medicine;  // 外功
+  member.innerAttack_total = member.innerAttack_base + member.innerAttack_equipment + member.innerAttack_medicine;  // 内功
+  member.outerDefense_total = member.outerDefense_base + member.outerDefense_equipment + member.outerDefense_medicine; // 外防
+  member.innerDefense_total = member.innerDefense_base + member.innerDefense_equipment + member.innerDefense_medicine; // 内防
+  member.crit_total = member.crit_base + member.crit_equipment + member.crit_medicine;  // 暴击率
+  member.dodge_total = member.dodge_base + member.dodge_equipment + member.dodge_medicine; // 闪避率
+  member.speed_total = member.speed_base + member.speed_equipment + member.speed_medicine; // 速度
+  member.understand_total = member.understand_base + member.understand_equipment + member.understand_medicine; // 悟性
 
   // 解构赋值 如：头像url、姓名、性别 0 - 未知 1 - 男 2 - 女
   member = { ...member, ...newInfo };
