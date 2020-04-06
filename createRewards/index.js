@@ -138,7 +138,7 @@ savePrize = async (prize) => {
 // }
 
 //////////////////////////////////////////////////
-// getRewards
+// createRewards
 // 获取奖励
 // param 
 // openid: String       openid 如果传值则查询对应id的角色信息、如果不传值则查询自身的角色信息
@@ -189,6 +189,18 @@ exports.main = async (event, context) => {
   } catch (e) {
     result = false;
     console.log('存入个人error.', e);
+  }
+
+  // 查询物品的名称
+  for (let i = 0; i < arrCreatePrize.length; i++) {
+    try {
+      const res = await db.collection('database_equipment')
+                          .doc(arrCreatePrize[i].id)
+                          .get();
+      arrCreatePrize[i].name = res.data.name;
+    } catch (e) {
+      console.log('queryPartsInfoComplete Error', e);
+    }
   }
 
   return {
