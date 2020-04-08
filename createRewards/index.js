@@ -40,7 +40,7 @@ const getUUID = () => {
 // 15%  白银碎片
 // 15%  青铜装备
 // 35%  青铜碎片
-getRandomBox = async (type) => {
+getRandomBox = async () => {
   const nRandom = Math.floor(Math.random() * 100);
   const nPosition = Math.floor(Math.random() * 6);
   const nTotal = (Math.floor(Math.random() * 3) + 1) * 5;
@@ -48,7 +48,6 @@ getRandomBox = async (type) => {
 
   objPrice._id = getUUID();
   objPrice.time = new Date().getTime();
-  objPrice.type = type;
   objPrice.level = 1;
   if (nRandom < 1) {              // 1% 星耀装备
     objPrice.id = `1015${nPosition}0`;
@@ -146,13 +145,13 @@ savePrize = async (prize) => {
 // count: Number        抽奖次数
 // return
 // result: Boolean      接口成功标识
-// prize: Array         [{_id:'', id:'', total:5, time:0}] 物品UUID唯一标识 物品ID 物品数量 创建时间戳
+// prize: Array         [{_id:'', id:'', name:'', total:5, time:0}] 物品UUID唯一标识 物品ID 物品名称 物品数量 创建时间戳
 //////////////////////////////////////////////////
 // 云函数入口函数
 exports.main = async (event, context) => {
   _openid = event.openid !== undefined ? event.openid : cloud.getWXContext().OPENID;
   _id = `parts-${_openid}`;
-  const type = event.type;
+  const type = event.type !== undefined ? event.type : "box";
   const count = event.count !== undefined ? event.count : 1;
 
   let result = true;
@@ -161,19 +160,9 @@ exports.main = async (event, context) => {
 
   // 随机抽奖
   try {
-    switch (type) {
-      case 'box':
-        for (let i = 0; i < count; i++) {
-          const tmpPrize = await getRandomBox(type);
-          prize.push(tmpPrize);
-        }
-        break;
-      case 'roll':
-
-        break;
-      default:
-
-        break;
+    for (let i = 0; i < count; i++) {
+      const tmpPrize = await getRandomBox();
+      prize.push(tmpPrize);
     }
   } catch (e) {
     result = false;
@@ -192,15 +181,21 @@ exports.main = async (event, context) => {
   }
 
   // 查询物品的名称
-  for (let i = 0; i < arrCreatePrize.length; i++) {
-    try {
-      const res = await db.collection('database_equipment')
-                          .doc(arrCreatePrize[i].id)
-                          .get();
-      arrCreatePrize[i].name = res.data.name;
-    } catch (e) {
-      console.log('queryPartsInfoComplete Error', e);
+  try {
+    // 查询所有
+    const res = await db.collection('databasePartsInfo').get();
+    const arrDatabase = res.data;
+
+    for (let i = 0; i < arrCreatePrize.length; i++) { 
+      const nIndex = arrDatabase.findIndex((item) => {
+        return (item._id === arrCreatePrize[i].id);
+      })
+      if (nIndex >= 0) {
+        arrCreatePrize[i].name = arrDatabase[nIndex].name;
+      }
     }
+  } catch (e) {
+    console.log('queryPartsInfoComplete Error', e);
   }
 
   return {
