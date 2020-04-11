@@ -111,7 +111,7 @@ createMember = async (newInfo) => {
   parts._id = member._partsid; // 配件表ID
   parts.mail = []; // 邮件列表
   parts.equipment = []; // 装备列表
-  parts.medicine = []; // 服用过药品列表
+  parts.medicine = []; // 药品列表
   parts.consumables = []; // 消耗品列表
   parts.magic = []; // 功法列表
   parts.pets = []; // 宠物列表

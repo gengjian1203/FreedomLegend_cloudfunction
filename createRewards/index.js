@@ -180,23 +180,23 @@ exports.main = async (event, context) => {
     console.log('存入个人error.', e);
   }
 
-  // 查询物品的名称
-  try {
-    // 查询所有
-    const res = await db.collection('databasePartsInfo').get();
-    const arrDatabase = res.data;
+  // // 查询物品的名称
+  // try {
+  //   // 查询所有
+  //   const res = await db.collection('databasePartsInfo').get();
+  //   const arrDatabase = res.data;
 
-    for (let i = 0; i < arrCreatePrize.length; i++) { 
-      const nIndex = arrDatabase.findIndex((item) => {
-        return (item._id === arrCreatePrize[i].id);
-      })
-      if (nIndex >= 0) {
-        arrCreatePrize[i].name = arrDatabase[nIndex].name;
-      }
-    }
-  } catch (e) {
-    console.log('queryPartsInfoComplete Error', e);
-  }
+  //   for (let i = 0; i < arrCreatePrize.length; i++) { 
+  //     const nIndex = arrDatabase.findIndex((item) => {
+  //       return (item._id === arrCreatePrize[i].id);
+  //     })
+  //     if (nIndex >= 0) {
+  //       arrCreatePrize[i].name = arrDatabase[nIndex].name;
+  //     }
+  //   }
+  // } catch (e) {
+  //   console.log('queryPartsInfoComplete Error', e);
+  // }
 
   return {
     result,
