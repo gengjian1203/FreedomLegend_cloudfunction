@@ -77,11 +77,33 @@
 ## 脚本
 #### 装备资料库表 database_equipment
 
-``` sql
+``` MongoDB
 // 清空装备资料库
 db.collection('database_equipment')
 .where({
   _id: _.exists(true)
 })
 .remove()
+```
+
+#### 向指定角色发送邮件
+``` MongoDB
+db.collection('parts')
+  .doc('parts-oxeKH5LuhzyrivQIJI54h9it3MA4')
+  .update({
+    data: {
+      mail: db.command.push([{
+        time: db.serverDate(),
+        strFrom: '系统管理员',
+        strContent: '恭喜恭喜，一次两个装备哟与哟我',
+        arrGifts: [{
+          id: '101510',
+          total: 1,
+        }, {
+          id: '101220',
+          total: 0
+        }]
+      }])
+    }
+  })
 ```

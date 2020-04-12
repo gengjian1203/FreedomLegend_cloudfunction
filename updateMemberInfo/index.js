@@ -109,7 +109,18 @@ createMember = async (newInfo) => {
 
   // 创建配件表基本信息
   parts._id = member._partsid; // 配件表ID
-  parts.mail = []; // 邮件列表
+  parts.mail = [{
+    time: dataServer,
+    strFrom: '系统管理员',
+    strContent: '欢迎您来到这个世界，这是给你的一份见面礼，希望你能够在这里，找到属于自己的快乐。',
+    arrGifts: [{
+      id: '000000',
+      total: 888,
+    }, {
+      id: '000001',
+      total: 5888
+    }]
+  }]; // 邮件列表
   parts.equipment = []; // 装备列表
   parts.medicine = []; // 药品列表
   parts.consumables = []; // 消耗品列表
