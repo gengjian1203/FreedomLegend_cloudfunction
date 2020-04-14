@@ -103,7 +103,7 @@ db.collection('parts')
         }, {
           id: '101220',
           level: 1,
-          total: 0
+          total: 1
         }]
       }])
     }
