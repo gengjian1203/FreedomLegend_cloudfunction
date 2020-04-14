@@ -97,10 +97,12 @@ db.collection('parts')
         strFrom: '系统管理员',
         strContent: '恭喜恭喜，一次两个装备哟与哟我',
         arrGifts: [{
-          id: '101510',
-          total: 1,
+          id: '000000',
+          level: 1,
+          total: 888
         }, {
           id: '101220',
+          level: 1,
           total: 0
         }]
       }])

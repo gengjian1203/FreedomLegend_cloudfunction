@@ -115,9 +115,11 @@ createMember = async (newInfo) => {
     strContent: '欢迎您来到这个世界，这是给你的一份见面礼，希望你能够在这里，找到属于自己的快乐。',
     arrGifts: [{
       id: '000000',
-      total: 888,
+      level: 1,
+      total: 888
     }, {
       id: '000001',
+      level: 1,
       total: 5888
     }]
   }]; // 邮件列表
