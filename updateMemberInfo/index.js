@@ -56,6 +56,7 @@ createMember = async (newInfo) => {
   member.exp = 0; // 经验
   member.money = 0; // 铜钱
   member.gold = 0; // 元宝
+  member.story = 0; //剧情进度
   // 身穿装备
   member.equipment_hat = {}; // 头戴
   member.equipment_shoulder = {}; // 肩披
@@ -114,11 +115,11 @@ createMember = async (newInfo) => {
     strFrom: '系统管理员',
     strContent: '欢迎您来到这个世界，这是给你的一份见面礼，希望你能够在这里，找到属于自己的快乐。',
     arrGifts: [{
-      id: '000000',
-      level: 1,
-      total: 888
-    }, {
       id: '000001',
+      level: 1,
+      total: 3888
+    }, {
+      id: '000002',
       level: 1,
       total: 5888
     }]
