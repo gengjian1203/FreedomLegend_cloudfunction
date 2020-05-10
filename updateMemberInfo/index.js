@@ -57,6 +57,8 @@ createMember = async (newInfo) => {
   member.money = 0; // 铜钱
   member.gold = 0; // 元宝
   member.story = 0; //剧情进度
+  member.sports = 10000; //竞技场排名
+  member.power = 140; //战力
   // 身穿装备
   member.equipment_hat = {}; // 头戴
   member.equipment_shoulder = {}; // 肩披

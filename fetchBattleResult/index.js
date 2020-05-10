@@ -98,7 +98,25 @@ function funBattleRound(arrListResult, arrListMemberInfoSort, nRound) {
   return false;
 }
 
-// 测试函数
+// 获取战斗结果
+function getBattleResult(arrListMemberInfoSort) {
+  let nHPFriend = 0;
+  let nHPOpponent = 0;
+  
+  arrListMemberInfoSort.forEach((item) => {
+    if (item.bFriends) {
+      nHPFriend += item.hp_total;
+    } else {
+      nHPOpponent += item.hp_total;
+    }
+  });
+
+  console.log('getBattleResult', nHPFriend, nHPOpponent);
+
+  return nHPFriend > nHPOpponent;
+}
+
+// 战斗主函数
 function funBattle(arrMemberInfoA, arrMemberInfoB) {
   let arrListResult = [];
   const nLengthA = arrMemberInfoA.length;
@@ -123,10 +141,14 @@ function funBattle(arrMemberInfoA, arrMemberInfoB) {
     }
   }
   // 血量比拼
+  const bWin = getBattleResult(arrListMemberInfoSort);
 
   // 打印战斗日志
-  console.log(arrListResult);
-  return arrListResult;
+  console.log('funBattle', bWin, arrListResult);
+  return {
+    bWin,
+    arrListResult,
+  }
 }
 
 // 测试参数
@@ -194,10 +216,11 @@ exports.main = async (event, context) => {
   const arrMemberInfoA = event.arrMemberInfoA !== undefined ? event.arrMemberInfoA : [];
   const arrMemberInfoB = event.arrMemberInfoB !== undefined ? event.arrMemberInfoB : [];
 
-  const arrListResult = funBattle(arrMemberInfoA, arrMemberInfoB);
+  const {bWin, arrListResult} = funBattle(arrMemberInfoA, arrMemberInfoB);
 
   return {
     result,
-    arrListResult: arrListResult,
+    bWin,
+    arrListResult,
   }
 }
