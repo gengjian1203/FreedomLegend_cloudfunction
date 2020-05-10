@@ -65,7 +65,9 @@ function funBattleRound(arrListResult, arrListMemberInfoSort, nRound) {
     // 对攻击者的影响
     const nEffectAttack = 0;
     // 对防御者的影响
-    const nEffectDefense = (nNumDefense - nNumAttack < 0) ? nNumDefense - nNumAttack : 0;
+    let nEffectDefense = Math.floor((nNumDefense - nNumAttack) * (1 + (Math.random() * 0.3)));
+    // 攻击浮动
+    nEffectDefense =  nEffectDefense < 0 ? nEffectDefense : 0;
 
     // 攻击者血量
     arrListMemberInfoSort[nIndexAttack].hp_total += nEffectAttack;
