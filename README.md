@@ -59,6 +59,17 @@
 // prize: Array         [{_id:'', id:'', total:5, time:0}] 物品UUID唯一标识 物品ID 物品数量 创建时间戳
 //////////////////////////////////////////////////
 
+### querySportsList
+//////////////////////////////////////////////////
+// querySportsList
+// 查询符合自身排名的演武场对手列表
+// param 
+// sportsNumber: Number     自身演武场排名
+// return
+// result: Boolean          接口成功标识
+// arrSportsList: Object    演武场对手列表
+//////////////////////////////////////////////////
+
 ### updateMemeberInfo
 //////////////////////////////////////////////////
 // updateMemeberInfo
@@ -113,6 +124,29 @@ db.collection('parts')
           total: 888
         }, {
           id: '101220',
+          level: 1,
+          total: 1
+        }]
+      }])
+    }
+  })
+```
+
+```
+db.collection('parts')
+  .doc('parts-oxeKH5LuhzyrivQIJI54h9it3MA4')
+  .update({
+    data: {
+      mail: db.command.push([{
+        time: db.serverDate(),
+        strFrom: '系统管理员',
+        strContent: '感觉你对小程序内测的大力支持，现在有一份小礼物送给你，请继续加油。',
+        arrGifts: [{
+          id: '000001',
+          level: 1,
+          total: 88888
+        }, {
+          id: '101550',
           level: 1,
           total: 1
         }]
