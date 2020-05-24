@@ -35,7 +35,7 @@ function getSportsNumber(nNumberSelf) {
 function createSportRobot(nRobotNumber) {
   const level = Math.abs(100 - Math.floor(nRobotNumber / 100));
   const objResult = {
-    _id: `mem-${nRobotNumber}`, 
+    _id: `sport-${nRobotNumber}`, 
     sportsNumber: nRobotNumber, 
     nickName: arrName[Math.floor(level / 10)] ? arrName[Math.floor(level / 10)] : '神秘黑影', 
     level: level, 
