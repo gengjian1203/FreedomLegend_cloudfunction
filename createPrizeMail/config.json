@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "openapi": [
+    ]
+  },
+  "triggers": [
+    {
+      "name": "everyDayPrizeMail",
+      "type": "timer",
+      "config": "0 0 4 * * * *"
+    }
+  ]
+}

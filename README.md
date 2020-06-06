@@ -154,3 +154,30 @@ db.collection('parts')
     }
   })
 ```
+
+#### 向所有人发邮件
+```
+db.collection('parts')
+  .where({
+    _id: db.command.exists(true)
+  })
+  .update({
+    data: {
+      mail: db.command.push([{
+        time: db.serverDate(),
+        strFrom: '系统管理员',
+        strContent: '感谢大家的支持，小小礼物，不成敬意。',
+        arrGifts: [{
+          id: '000001',
+          total: 1000,
+        }, {
+          id: '000002',
+          total: 8888,
+        }, {
+          id: '101531',
+          total: 20,
+        }]
+      }])
+    }
+  })
+```

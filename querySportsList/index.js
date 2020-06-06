@@ -33,7 +33,8 @@ function getSportsNumber(nNumberSelf) {
 
 // 创建比武机器人
 function createSportRobot(nRobotNumber) {
-  const level = Math.abs(100 - Math.floor(nRobotNumber / 100));
+  // const level = Math.abs(100 - Math.floor(nRobotNumber / 100));
+  const level = 0;
   const objResult = {
     _id: `sport-${nRobotNumber}`, 
     sportsNumber: nRobotNumber, 
