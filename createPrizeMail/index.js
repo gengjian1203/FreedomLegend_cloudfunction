@@ -44,7 +44,7 @@ sendPrizeMail = async () => {
                                 total: 1500,
                               }, {
                                 id: '000002',
-                                total: 8888,
+                                total: 18888,
                               }, {
                                 id: '101531',
                                 total: 20,
