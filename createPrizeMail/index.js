@@ -19,12 +19,12 @@ sendPrizeMail = async () => {
                           '做一个幸福的人，关心身体和心情，成为最好的自己。',
                           '山是水的故事，云是风的故事，而你是我的故事~',
                           '多谢你如此精彩耀眼的陪伴，做我平淡岁月里的星辰。',
-                          '你的陪伴像是四月早天里的云烟，黄昏吹着风的软，星子在无意中闪，细雨点洒在花前。',
+                          '你的陪伴像是早天里的云烟，黄昏吹着风的软，星子在无意中闪，细雨点洒在花前。',
                           '世界曾经颠倒黑白 ,如今回归绚丽色彩。世界曾经失去声响，如今有你们陪我唱歌。',
                           '生活，总会有不期而遇的温暖，和生生不息的希望。']
   const date = new Date();
   const strContent = `今天是` + 
-                     `${date.getFullYear()}年${date.getMonth()}月${date.getDate()}日。${arrWeekString[date.getDay() % 7]}\n` + 
+                     `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日。${arrWeekString[date.getDay() % 7]}\n` + 
                      `${arrWeekContent[date.getDay() % 7]}\n` + 
                      `早安~`;
 
