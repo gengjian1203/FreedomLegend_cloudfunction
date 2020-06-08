@@ -81,6 +81,10 @@ exports.main = async (event, context) => {
                              }
                            }).get();
     console.log('mongodb.', member.data);
+    // 摘除开外挂的
+    member.data = member.data.filter((itemCheck) => {
+      return !itemCheck.isDisable
+    });
     // 补全机器人
     for (item of arrSportsNumber) {
       const nIndex = member.data.findIndex((element) => {
